@@ -37,53 +37,47 @@ const Pizzas = [
     },
 ]
 
-let suma = 0;
+let error = '';
 const barra = '----------------------'
 
-let Ejercicio = "Pizzas"
-console.log(Ejercicio)
-console.log(Pizzas)
+const boton = document.getElementById("btn-obtener")
+const input = document.getElementById("id_pizza")
+const contenedor = document.querySelector("#container")
+const precio_error = document.querySelector("#precio_error")
+const nombre_pizza = document.querySelector("#pizza")
+const form = document.querySelector(".form")
 
-//console.log(`Si. Hay ${suma} pizza/s que valen + de $600`)
-//console.log(`La pizza ${nombre} tiene un valor de ${precio}`)
-//console.log(`La pizza ${nombre} tiene estos ingredientes ${ingredientes}`) 
+console.log(boton)
+console.log(input)
+console.log(contenedor)
+console.log(precio_error)
+console.log(nombre_pizza)
+console.log(form)
 
-//let Pizza2 = {...Pizza}
+function obtenerPizza(event) {
+    event.preventDefault();
 
-Ejercicio = "Item a - Pizzas con id Impar"
-console.log(barra)
-console.log(Ejercicio)
-console.log(barra)
-for (let i = 0; i < 6; i += 2) {
-    console.log(`La pizza que tiene el id impar ${Pizzas[i].id} es ${Pizzas[i].nombre}`)
-}
+    /*if (typeof(parseInt(input.value)) !== 'number'){
+        error = 'No es un número'
+    }*/
+    const existePizza = Pizzas.find(pizza => pizza.id === parseInt(input.value));
 
-Ejercicio = "Item b - Si hay pizzas + a $600"
-console.log(barra)
-console.log(Ejercicio)
-console.log(barra)
-for (let i = 0; i < 6; i++) {
-    if (Pizzas[i].precio > 600) {
-        suma++;
+    if (typeof existePizza === 'undefined') {
+        nombre_pizza.textContent = ''
+        precio_error.textContent = `No existe la pizza`
+        return;
     }
-}
-console.log(`Si. Hay ${suma} pizza/s que valen + de $600`)
 
-Ejercicio = "Item c - Pizza y su precio"
-console.log(barra)
-console.log(Ejercicio)
-console.log(barra)
-for (let i = 0; i < 6; i++) {
-    console.log(`La pizza ${Pizzas[i].nombre} tiene un valor de $${Pizzas[i].precio}`)
+    nombre_pizza.textContent = `La pizza es ${existePizza.nombre}`
+    precio_error.textContent = `El precio es $ ${existePizza.precio}`
+
 }
 
-Ejercicio = "Item d - Pizza y sus ingredientes"
-console.log(barra)
-console.log(Ejercicio)
-console.log(barra)
-for (let i = 0; i < 6; i++) {
-    console.log(`La pizza ${Pizzas[i].nombre} tiene estos ingredientes:`);
-    for (let x = 0; x <= Pizzas[i].ingredientes.length-1; x++) {
-        console.log(`Ingrediente ${x+1} es ${Pizzas[i].ingredientes[x]}`);
-    }
-} 
+function limpiar(e) {
+    input.value = '';
+}
+
+form.onsubmit = obtenerPizza
+input.addEventListener("focus", limpiar)
+
+
